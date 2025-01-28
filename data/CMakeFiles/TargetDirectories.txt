@@ -1,0 +1,3 @@
+/home/bk/Desktop/TRY/prod_button/data/CMakeFiles/wayland_button.dir
+/home/bk/Desktop/TRY/prod_button/data/CMakeFiles/edit_cache.dir
+/home/bk/Desktop/TRY/prod_button/data/CMakeFiles/rebuild_cache.dir

@@ -1,0 +1,31 @@
+echo $LD_LIBRARY_PATH
+
+export LD_LIBRARY_PATH=$LD_LIBRARY_
+PATH:/data/sample_test/
+
+echo $LD_LIBRARY_PATH
+:/data/sample_test/
+
+
+#to run 
+gcc -o wayland-client example.c -lwayland-client
+
+#to open terminal
+weston
+
+#to run cairo
+gcc mycairo.c -o mycairo `pkg-config --cflags --libs cairo
+
+
+# to run prod
+gcc -o wayland_button wayland_button.c xdg-shell-client-protocol.c \
+    $(pkg-config --cflags --libs wayland-client wayland-cursor cairo) -lm
+
+
+#adb 
+kill -9 1217
+root@quin-gvm-gen4:/data# ps -ef
+
+
+gcc -o dev dev.c xdg-shell-client-protocol.c \
+    $(pkg-config --cflags --libs wayland-client wayland-cursor cairo) -lm

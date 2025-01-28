@@ -1,0 +1,7 @@
+    char *button_images[5] = {
+        "/home/bk/Desktop/TRY/prod_button/data/images/antakshari.png", // Image for button 1
+        "/home/bk/Desktop/TRY/prod_button/data/images/bgsub.png",      // Image for button 2
+        "/home/bk/Desktop/TRY/prod_button/data/images/mag.png",        // Image for button 3
+        "/home/bk/Desktop/TRY/prod_button/data/images/karaoke.png",    // Image for button 4
+        "/home/bk/Desktop/TRY/prod_button/data/images/vr.png"          // Image for button 5
+    };
