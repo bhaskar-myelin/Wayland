@@ -29,3 +29,7 @@ root@quin-gvm-gen4:/data# ps -ef
 
 gcc -o dev dev.c xdg-shell-client-protocol.c \
     $(pkg-config --cflags --libs wayland-client wayland-cursor cairo) -lm
+
+
+g++ -o dev dev.cpp xdg-shell-client-protocol.c \
+    $(pkg-config --cflags --libs wayland-client wayland-cursor cairo) -lm

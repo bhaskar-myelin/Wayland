@@ -1,0 +1,6 @@
+{
+    "files.associations": {
+        "xdg-shell-client-protocol.h": "c",
+        "helloworld.hpp": "c"
+    }
+}

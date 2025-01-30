@@ -9,7 +9,10 @@
 #include <wayland-cursor.h>
 #include <linux/input.h>
 #include "xdg-shell-client-protocol.h"
-#include <cairo.h>
+#include "helloWorld.h"
+
+#include <cairo/cairo.h>
+// #include <cairo.h>
 
 #define MIN_WIDTH 1920
 #define MIN_HEIGHT 1040
@@ -116,17 +119,18 @@ static int load_image(struct client_state *state, const char *image_path)
     return 0;
 }
 
-static const char *button_images[5] = {
+static const char *button_images[6] = {
     "data/images/antakshari.png", // Image for button 1
     "data/images/bgsub.png",      // Image for button 2
     "data/images/mag.png",        // Image for button 3
     "data/images/karaoke.png",    // Image for button 4
-    "data/images/vr.png"          // Image for button 5
+    "data/images/vr.png",
+    "/home/bk/Desktop/TRY/Wayland/data/images/bg.png", // Image for button 6
 };
 
 static void draw_button_1(struct client_state *state)
 {
-    const char *image_path = "data/images/play.png";
+    const char *image_path = "/home/bk/Desktop/TRY/Wayland/data/images2/icon1.png";
     int button_height = state->height / 5;
     int y_start = 0; // Position for button 1
 
@@ -153,46 +157,70 @@ static void draw_button_1(struct client_state *state)
     cairo_destroy(cr);
     cairo_surface_destroy(surface);
     cairo_surface_destroy(image_surface);
-
-    // Draw the button text
-    const char *button_text = "Antakshari";
-    draw_text(state, button_text, 50, y_start + button_height / 2, 2);
 }
 
 static void draw_button_2(struct client_state *state)
 {
-    uint32_t button_color = 0xFF00FF00; // Green color
-    const char *button_text = "BG-Sub";
+    const char *image_path = "/home/bk/Desktop/TRY/Wayland/data/images/icon2.png";
     int button_height = state->height / 5;
-    int y_start = button_height; // Position for button 2
+    int y_start = button_height; // Position for button 1
 
-    uint32_t *pixels = state->shm_data;
-    for (int y = y_start; y < y_start + button_height; y++)
+    // Load the image
+    cairo_surface_t *image_surface = cairo_image_surface_create_from_png(image_path);
+    if (cairo_surface_status(image_surface) != CAIRO_STATUS_SUCCESS)
     {
-        for (int x = 30; x < 300; x++)
-        {
-            pixels[y * state->width + x] = button_color;
-        }
+        fprintf(stderr, "Failed to load image: %s\n", image_path);
+        return;
     }
-    draw_text(state, button_text, 50, y_start + button_height / 2, 2);
+
+    // Draw the image onto the button
+    cairo_surface_t *surface = cairo_image_surface_create_for_data(
+        (unsigned char *)state->shm_data,
+        CAIRO_FORMAT_ARGB32,
+        state->width, state->height,
+        state->width * 4);
+
+    cairo_t *cr = cairo_create(surface);
+    cairo_set_source_surface(cr, image_surface, 30, y_start); // Adjust the position (30, y_start)
+    cairo_rectangle(cr, 30, y_start, 270, button_height);     // Clip the image to the button area
+    cairo_fill(cr);
+
+    cairo_destroy(cr);
+    cairo_surface_destroy(surface);
+    cairo_surface_destroy(image_surface);
 }
 
 static void draw_button_3(struct client_state *state)
 {
     uint32_t button_color = 0xFF0000FF; // Blue color
     const char *button_text = "MAG";
+    const char *image_path = "/home/bk/Desktop/TRY/Wayland/data/images/icon3.png";
     int button_height = state->height / 5;
-    int y_start = 2 * button_height; // Position for button 3
+    int y_start = 2 * button_height; // Position for button 1
 
-    uint32_t *pixels = state->shm_data;
-    for (int y = y_start; y < y_start + button_height; y++)
+    // Load the image
+    cairo_surface_t *image_surface = cairo_image_surface_create_from_png(image_path);
+    if (cairo_surface_status(image_surface) != CAIRO_STATUS_SUCCESS)
     {
-        for (int x = 30; x < 300; x++)
-        {
-            pixels[y * state->width + x] = button_color;
-        }
+        fprintf(stderr, "Failed to load image: %s\n", image_path);
+        return;
     }
-    draw_text(state, button_text, 50, y_start + button_height / 2, 2);
+
+    // Draw the image onto the button
+    cairo_surface_t *surface = cairo_image_surface_create_for_data(
+        (unsigned char *)state->shm_data,
+        CAIRO_FORMAT_ARGB32,
+        state->width, state->height,
+        state->width * 4);
+
+    cairo_t *cr = cairo_create(surface);
+    cairo_set_source_surface(cr, image_surface, 30, y_start); // Adjust the position (30, y_start)
+    cairo_rectangle(cr, 30, y_start, 270, button_height);     // Clip the image to the button area
+    cairo_fill(cr);
+
+    cairo_destroy(cr);
+    cairo_surface_destroy(surface);
+    cairo_surface_destroy(image_surface);
 }
 
 static void draw_button_4(struct client_state *state)
@@ -200,17 +228,31 @@ static void draw_button_4(struct client_state *state)
     uint32_t button_color = 0xFFFFFF00; // Yellow color
     const char *button_text = "Karaoke";
     int button_height = state->height / 5;
-    int y_start = 3 * button_height; // Position for button 4
-
-    uint32_t *pixels = state->shm_data;
-    for (int y = y_start; y < y_start + button_height; y++)
+    int y_start = 3 * button_height; // Position for button 4 const char *image_path = "data/images/icon2.png";
+    // Load the image
+    const char *image_path = "/home/bk/Desktop/TRY/Wayland/data/images/icon4.png";
+    cairo_surface_t *image_surface = cairo_image_surface_create_from_png(image_path);
+    if (cairo_surface_status(image_surface) != CAIRO_STATUS_SUCCESS)
     {
-        for (int x = 30; x < 300; x++)
-        {
-            pixels[y * state->width + x] = button_color;
-        }
+        fprintf(stderr, "Failed to load image: %s\n", image_path);
+        return;
     }
-    draw_text(state, button_text, 50, y_start + button_height / 2, 2);
+
+    // Draw the image onto the button
+    cairo_surface_t *surface = cairo_image_surface_create_for_data(
+        (unsigned char *)state->shm_data,
+        CAIRO_FORMAT_ARGB32,
+        state->width, state->height,
+        state->width * 4);
+
+    cairo_t *cr = cairo_create(surface);
+    cairo_set_source_surface(cr, image_surface, 30, y_start); // Adjust the position (30, y_start)
+    cairo_rectangle(cr, 30, y_start, 270, button_height);     // Clip the image to the button area
+    cairo_fill(cr);
+
+    cairo_destroy(cr);
+    cairo_surface_destroy(surface);
+    cairo_surface_destroy(image_surface);
 }
 
 static void draw_button_5(struct client_state *state)
@@ -220,15 +262,30 @@ static void draw_button_5(struct client_state *state)
     int button_height = state->height / 5;
     int y_start = 4 * button_height; // Position for button 5
 
-    uint32_t *pixels = state->shm_data;
-    for (int y = y_start; y < y_start + button_height; y++)
+    // Load the image
+    const char *image_path = "/home/bk/Desktop/TRY/Wayland/data/images/icon5.png";
+    cairo_surface_t *image_surface = cairo_image_surface_create_from_png(image_path);
+    if (cairo_surface_status(image_surface) != CAIRO_STATUS_SUCCESS)
     {
-        for (int x = 30; x < 300; x++)
-        {
-            pixels[y * state->width + x] = button_color;
-        }
+        fprintf(stderr, "Failed to load image: %s\n", image_path);
+        return;
     }
-    draw_text(state, button_text, 50, y_start + button_height / 2, 2);
+
+    // Draw the image onto the button
+    cairo_surface_t *surface = cairo_image_surface_create_for_data(
+        (unsigned char *)state->shm_data,
+        CAIRO_FORMAT_ARGB32,
+        state->width, state->height,
+        state->width * 4);
+
+    cairo_t *cr = cairo_create(surface);
+    cairo_set_source_surface(cr, image_surface, 30, y_start); // Adjust the position (30, y_start)
+    cairo_rectangle(cr, 30, y_start, 270, button_height);     // Clip the image to the button area
+    cairo_fill(cr);
+
+    cairo_destroy(cr);
+    cairo_surface_destroy(surface);
+    cairo_surface_destroy(image_surface);
 }
 
 static void draw_button(struct client_state *state)
@@ -352,7 +409,7 @@ static void pointer_button(void *data, struct wl_pointer *pointer,
                 state->pointer_x >= 30 && state->pointer_x < 300)
             {
                 // Load the image when a button is clicked
-                const char *image_path = button_images[i]; // Use the corresponding image path
+                const char *image_path = button_images[5]; // Use the corresponding image path
                 printf("Loading image from: %s\n", image_path);
                 load_image(state, image_path); // Load the image based on button clicked
 
@@ -404,7 +461,7 @@ static void touch_down(void *data, struct wl_touch *touch,
             touch_x >= 30 && touch_x < 300)
         {
             // Button touched, load and display corresponding image
-            const char *image_path = button_images[i];
+            const char *image_path = button_images[5];
             printf("Touch detected on button %d, loading image: %s\n", i + 1, image_path);
 
             if (load_image(state, image_path) == 0)
@@ -579,9 +636,15 @@ static const struct wl_registry_listener registry_listener = {
     .global = registry_global,
     .global_remove = registry_global_remove,
 };
+void api_display(int result)
+{
+    printf("Result in ui: %d\n", result);
+}
 
 int main(int argc, char **argv)
 {
+
+    printf("indside main");
     struct client_state state = {0};
     state.running = 1;
     state.button_pressed = 0;
@@ -598,7 +661,10 @@ int main(int argc, char **argv)
 
     // Get the registry
     state.registry = wl_display_get_registry(state.display);
+    printf("this is before wl registry listner");
     wl_registry_add_listener(state.registry, &registry_listener, &state);
+
+    printf("this is after wl registry listner");
     wl_display_roundtrip(state.display);
 
     if (!state.compositor || !state.shm)
@@ -652,8 +718,20 @@ int main(int argc, char **argv)
     printf("Click in the window to see it change color\n");
 
     // Main event loop
+
+    printf(" Calling Library \n");
+    int ctr = 0;
+
+    initHelloWorld(api_display);
+
+    // Add two numbers and process with the callback
+    addNumbers(5, 3);
+
     while (state.running)
     {
+        ctr++;
+        ctr = ctr % 10;
+        printf(" indside while %d \n", ctr);
         wl_display_dispatch(state.display);
     }
 

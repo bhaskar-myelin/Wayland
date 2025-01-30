@@ -1,0 +1,1 @@
+/usr/bin/cc -L/usr/lib/x86_64-linux-gnu -lwayland-client -lwayland-cursor -lcairo CMakeFiles/dev.dir/dev.c.o CMakeFiles/dev.dir/xdg-shell-client-protocol.c.o -o dev   -L/home/bk/Desktop/TRY/Wayland  -Wl,-rpath,/home/bk/Desktop/TRY/Wayland -lwayland-client -lwayland-cursor -lcairo -lm -lhelloWorld 
